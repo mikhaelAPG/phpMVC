@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 class App {
     protected $controller = 'Home';
@@ -9,7 +9,8 @@ class App {
     {
         $url = $this->parseURL();
         
-        if (file_exists('../app/controllers/' . $url[0] . '.php')) {
+        // controller
+        if( file_exists('../app/controllers/' . $url[0] . '.php') ) {
             $this->controller = $url[0];
             unset($url[0]);
         }
@@ -17,26 +18,27 @@ class App {
         require_once '../app/controllers/' . $this->controller . '.php';
         $this->controller = new $this->controller;
 
-        //method
-        if (isset($url[1])) {
-            if (method_exists($this->controller, $url[1])) {
+        // method
+        if( isset($url[1]) ) {
+            if( method_exists($this->controller, $url[1]) ) {
                 $this->method = $url[1];
                 unset($url[1]);
             }
         }
 
-        //parameter
-        if (!empty($url)) {
-            array_values($this->params = array_values($url));
+        // params
+        if( !empty($url) ) {
+            $this->params = array_values($url);
         }
 
-        //jalankan controller & method, serta kirimkan params jika ada
+        // jalankan controller & method, serta kirimkan params jika ada
         call_user_func_array([$this->controller, $this->method], $this->params);
+
     }
 
     public function parseURL()
     {
-        if (isset($_GET['url'])) {
+        if( isset($_GET['url']) ) {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
