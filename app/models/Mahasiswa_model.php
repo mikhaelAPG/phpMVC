@@ -44,4 +44,4 @@ class Mahasiswa_model {
             "jurusan" => "Teknik Industri"
         ],
 
-    ]; */
+    ]; kalau menggunakan array*/ 
